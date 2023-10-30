@@ -1,4 +1,6 @@
 # Get VPN Config
+[get-vpn-config.py](/scripts/get-vpn-config.py)
+
 This script captures Solace Message-VPN config recursively and saves them locally. This is useful for taking config backup or for cloning it on a dabcerent broker or as dabcerent message VPN.
 
 ## Running

@@ -1,10 +1,10 @@
 # Move or Copy Messages
 
- Copy/Move messages between Solace Queues
+[move-queue-msgs.py](/scripts/move-queue-msgs.py): This script can be used to copy / move messages between Queues in the same VPN.
 
  Use --copy-only to copy messages (leave messages in source queue)
  Default is to move messages (delete from source queue)
-## Note:
+
 -  Max Page size is 100 (SEMP limitation?). Can't move more than 100 messages in one run
 
 # Running
