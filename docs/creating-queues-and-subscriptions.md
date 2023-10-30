@@ -1,7 +1,7 @@
 # Creating Queues and Subscriptions on existing VPN
 
 This is a two step process. (three if you inlcude config createion)
-* Pre step is to have configs created that list the queues to be created
+* Pre step is to have [configs](/config/sample-local-config.yaml) and [input file](/config/sample-queues.csv) created that list the queues to be created
 * In the first step, create required SEMP Json files to create Queues
 * In the next step, apply these on the router to create the queues.
 
