@@ -9,8 +9,8 @@ router:
 # VPN to work with
 vpn:
    msgVpnNames: 
-   - "TestVPN"
-   - "TestVPN2"
+   - TestVPN
+   - TestVPN2
 
 # requried for move-queue-msgs
 queues:

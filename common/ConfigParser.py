@@ -42,6 +42,9 @@ class ConfigParser:
     def cfg_parse (self, obj, path, cfg) :
         """ parse cfg recursively """
 
+        if 'links' not in cfg:
+            print ("No links to process in cfg")
+            return cfg
         links = cfg['links']
         if Verbose > 2:
             print ("Entering {}::{} obj = {} path = {}".format( __class__.__name__, inspect.stack()[0][3], obj, path))

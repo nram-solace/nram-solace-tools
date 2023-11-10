@@ -77,15 +77,23 @@ def main(argv):
         print ("\nGet VPN Config for {}".format(vpn_name))
         vpn_json_file = get_vpn_data(vpn_name)
 
+        vpn_json_data = json_h.read_json_file (vpn_json_file)
+        if 'data' not in vpn_json_data:
+            print ('**** No data element. Skipping invalid json file: {} ****'.format(vpn_json_file))
+            continue
+
         # get vpn data first
         print ('Parse VPN JSON Configs for {} ({})'. format(vpn_name, vpn_json_file))
         vpn_json_data = json_h.read_json_data (vpn_json_file)
+
         vpn_cfg = cfg_p.cfg_parse(vpn_name, os.path.dirname(vpn_json_file), vpn_json_data)
 
         # save cfg to file
         print ('Save VPN all config json')
         vpn_allcfg_out_file = "{}/{}-all.json". format(os.path.dirname(vpn_json_file), vpn_name)
         json_h.save_json_file(vpn_allcfg_out_file, vpn_cfg)
+
+    print ('\n{} Done\n'.format(me))
 
 
 def get_vpn_data(vpn):

@@ -40,7 +40,7 @@ skipObjects:
   - msgVpns
   - publishTopicExceptions
   - replayLogs
-  - attriutes
+  - attributes
 
 # VPN objects such as "default" and system objects to skip processing
 skipTags:

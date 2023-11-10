@@ -79,7 +79,10 @@ class JsonHandler():
         if type(json_file) != "str":
             json_file = str(json_file)
         with open(json_file, "r") as fp:
-            json_payload = json.load(fp)  
+            json_payload = json.load(fp) 
+        if 'data' not in json_payload:
+            print ("ERROR: Invalid json file: {}".format(json_file))
+            return
         json_data = json_payload['data']
 
         links = None
