@@ -5,24 +5,115 @@ This script captures Solace Message-VPN config recursively and saves them locall
 
 ## Running
 ``` shell
-▶ python3 get-vpn-config.py --config private/abc_dev.json 
-get-vpn-config-1.1 Starting
+▶ python3 scripts/get-vpn-config.py --config config/sample-config-local.yaml
 
-Reading system config config/system.json
+get-vpn-config-2.0.0 Starting
 
-Get VPN Config for abc_dev
-   Get URL https://mr-connection-x1.messaging.solace.cloud:943/SEMP/v2/config/msgVpns/abc_dev
-   > Writing to output/json/ABC/abc_dev/vpn.json
-   Get URL https://mr-connection-x1.messaging.solace.cloud:943/SEMP/v2/config/msgVpns/abc_dev/aclProfiles [10] (*)
-   > Writing to output/json/ABC/abc_dev//aclProfiles/aclProfiles.json
-...
-parse_links:Processing object: topicEndpoints (ABC_DEV/POC/Manual/Topic) Link: https://mr-connection-x1.messaging.solace.cloud:943/SEMP/v2/config/msgVpns/abc_dev/topicEndpoints/ABC_DEV/POC/Manual/Topic
-parse_links:Processing object: topicEndpoints (Topic_EndPoint) Link: https://mr-connection-x1.messaging.solace.cloud:943/SEMP/v2/config/msgVpns/abc_dev/topicEndpoints/Topic_EndPoint
-parse_links:Processing object: topicEndpoints (Topic_POC) Link: https://mr-connection-x1.messaging.solace.cloud:943/SEMP/v2/config/msgVpns/abc_dev/topicEndpoints/Topic_POC
-parse_links:Processing object: msgVpns (abc_dev) Link: https://mr-connection-x1.messaging.solace.cloud:943/SEMP/v2/config/msgVpns/abc_dev
+Reading user config file  : config/sample-config-local.yaml
+Reading system config file: config/system.yaml
+
+Get VPN Config for TestVPN
+   - Skiping output/json/localhost/TestVPN/vpn.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/aclProfiles.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/#acl-profile/clientConnectExceptions/clientConnectExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/#acl-profile/publishExceptions/publishExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/#acl-profile/publishTopicExceptions/publishTopicExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/#acl-profile/subscribeExceptions/subscribeExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/#acl-profile/subscribeShareNameExceptions/subscribeShareNameExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/#acl-profile/subscribeTopicExceptions/subscribeTopicExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/default/clientConnectExceptions/clientConnectExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/default/publishExceptions/publishExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/default/publishTopicExceptions/publishTopicExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/default/subscribeExceptions/subscribeExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/default/subscribeShareNameExceptions/subscribeShareNameExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//aclProfiles/default/subscribeTopicExceptions/subscribeTopicExceptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//authenticationOauthProfiles/authenticationOauthProfiles.json (file exists)
+   - Skiping output/json/localhost/TestVPN//authenticationOauthProviders/authenticationOauthProviders.json (file exists)
+   - Skiping output/json/localhost/TestVPN//authorizationGroups/authorizationGroups.json (file exists)
+   - Skiping output/json/localhost/TestVPN//bridges/bridges.json (file exists)
+   - Skiping output/json/localhost/TestVPN//certMatchingRules/certMatchingRules.json (file exists)
+   - Skiping output/json/localhost/TestVPN//clientProfiles/clientProfiles.json (file exists)
+   - Skiping output/json/localhost/TestVPN//clientUsernames/clientUsernames.json (file exists)
+**** Get URL http://localhost:8080/SEMP/v2/config/msgVpns/TestVPN/clientUsernames/#client-username/attributes failed ****
+   - Skiping output/json/localhost/TestVPN//clientUsernames/#client-username/attributes/attributes.json (file exists)
+   - Skiping output/json/localhost/TestVPN//clientUsernames/default/attributes/attributes.json (file exists)
+   - Skiping output/json/localhost/TestVPN//clientUsernames/testuser/attributes/attributes.json (file exists)
+   - Skiping output/json/localhost/TestVPN//distributedCaches/distributedCaches.json (file exists)
+   - Skiping output/json/localhost/TestVPN//dmrBridges/dmrBridges.json (file exists)
+   - Skiping output/json/localhost/TestVPN//jndiConnectionFactories/jndiConnectionFactories.json (file exists)
+   - Skiping output/json/localhost/TestVPN//jndiQueues/jndiQueues.json (file exists)
+   - Skiping output/json/localhost/TestVPN//jndiTopics/jndiTopics.json (file exists)
+   - Skiping output/json/localhost/TestVPN//kafkaReceivers/kafkaReceivers.json (file exists)
+   - Skiping output/json/localhost/TestVPN//kafkaSenders/kafkaSenders.json (file exists)
+   - Skiping output/json/localhost/TestVPN//mqttRetainCaches/mqttRetainCaches.json (file exists)
+   - Skiping output/json/localhost/TestVPN//mqttSessions/mqttSessions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//proxies/proxies.json (file exists)
+   - Skiping output/json/localhost/TestVPN//queueTemplates/queueTemplates.json (file exists)
+   - Skiping output/json/localhost/TestVPN//queues/queues.json (file exists)
+   - Skiping output/json/localhost/TestVPN//queues/TestQ/subscriptions/subscriptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//queues/TestQ2/subscriptions/subscriptions.json (file exists)
+   - Skiping output/json/localhost/TestVPN//replayLogs/replayLogs.json (file exists)
+   - Skiping output/json/localhost/TestVPN//replicatedTopics/replicatedTopics.json (file exists)
+   - Skiping output/json/localhost/TestVPN//restDeliveryPoints/restDeliveryPoints.json (file exists)
+   - Skiping output/json/localhost/TestVPN//sequencedTopics/sequencedTopics.json (file exists)
+   - Skiping output/json/localhost/TestVPN//telemetryProfiles/telemetryProfiles.json (file exists)
+   - Skiping output/json/localhost/TestVPN//topicEndpointTemplates/topicEndpointTemplates.json (file exists)
+   - Skiping output/json/localhost/TestVPN//topicEndpoints/topicEndpoints.json (file exists)
+Parse VPN JSON Configs for TestVPN (output/json/localhost/TestVPN/vpn.json)
 Save VPN all config json
-   Writing to output/json/ABC/abc_dev/abc_dev-all.json
+   Overwriting output/json/localhost/TestVPN/TestVPN-all.json
 
+Get VPN Config for ProdVPN
+   - Skiping output/json/localhost/ProdVPN/vpn.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/aclProfiles-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/#acl-profile/clientConnectExceptions/clientConnectExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/#acl-profile/publishExceptions/publishExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/#acl-profile/publishTopicExceptions/publishTopicExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/#acl-profile/subscribeExceptions/subscribeExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/#acl-profile/subscribeShareNameExceptions/subscribeShareNameExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/#acl-profile/subscribeTopicExceptions/subscribeTopicExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/default/clientConnectExceptions/clientConnectExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/default/publishExceptions/publishExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/default/publishTopicExceptions/publishTopicExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/default/subscribeExceptions/subscribeExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/default/subscribeShareNameExceptions/subscribeShareNameExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//aclProfiles/default/subscribeTopicExceptions/subscribeTopicExceptions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//authenticationOauthProfiles/authenticationOauthProfiles-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//authenticationOauthProviders/authenticationOauthProviders-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//authorizationGroups/authorizationGroups-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//bridges/bridges-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//certMatchingRules/certMatchingRules-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//clientProfiles/clientProfiles-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//clientUsernames/clientUsernames-1.json (file exists)
+**** Get URL http://localhost:8080/SEMP/v2/config/msgVpns/ProdVPN/clientUsernames/#client-username/attributes failed ****
+   - Skiping output/json/localhost/ProdVPN//clientUsernames/#client-username/attributes/attributes-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//clientUsernames/default/attributes/attributes-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//distributedCaches/distributedCaches-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//dmrBridges/dmrBridges-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//jndiConnectionFactories/jndiConnectionFactories-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//jndiQueues/jndiQueues-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//jndiTopics/jndiTopics-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//kafkaReceivers/kafkaReceivers-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//kafkaSenders/kafkaSenders-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//mqttRetainCaches/mqttRetainCaches-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//mqttSessions/mqttSessions-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//proxies/proxies-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//queueTemplates/queueTemplates-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//queues/queues-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//queues/MyQ/subscriptions/subscriptions.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//queues/XYZ/subscriptions/subscriptions.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//replayLogs/replayLogs-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//replicatedTopics/replicatedTopics-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//restDeliveryPoints/restDeliveryPoints-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//sequencedTopics/sequencedTopics-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//telemetryProfiles/telemetryProfiles-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//topicEndpointTemplates/topicEndpointTemplates-1.json (file exists)
+   - Skiping output/json/localhost/ProdVPN//topicEndpoints/topicEndpoints-1.json (file exists)
+Parse VPN JSON Configs for ProdVPN (output/json/localhost/ProdVPN/vpn.json)
+Save VPN all config json
+   Overwriting output/json/localhost/ProdVPN/ProdVPN-all.json
+
+get-vpn-config Done
 ```
 
 ### Verify JSON files are created locally

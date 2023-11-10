@@ -10,7 +10,7 @@ router:
 vpn:
    msgVpnNames: 
    - TestVPN
-   - TestVPN2
+   - ProdVPN
 
 # requried for move-queue-msgs
 queues:
