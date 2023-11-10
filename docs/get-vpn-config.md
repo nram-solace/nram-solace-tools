@@ -119,15 +119,9 @@ get-vpn-config Done
 ### Verify JSON files are created locally
 
 ```
-	? ls output/json/nram_poc/nram-poc-vpn
-	aclProfiles                  certMatchingRules            jndiConnectionFactories      nram-poc-vpn-all.json        restDeliveryPoints
-	authenticationOauthProfiles  clientProfiles               jndiQueues                   queueTemplates               sequencedTopics
-	authenticationOauthProviders clientUsernames              jndiTopics                   queues                       topicEndpointTemplates
-	authorizationGroups          distributedCaches            mqttRetainCaches             replayLogs                   topicEndpoints
-	bridges                      dmrBridges                   mqttSessions                 replicatedTopics             vpn.json
-
-	ABC/Tools/abc-sempv2-tools  master ?                                                                                                                                                   17m ? ?
-	? ls output/json/nram_poc/nram-poc-vpn/queues
-	MQ.IN                             Q.DEV.QUEUE.1                     Q.TEST                            TestQ                             nram-poc-vpn_nram-dev1-ohio_Queue
-	MQ.OUT                            Q.DEV.QUEUE.2                     Q.TO.MQ.NRAM                      TestQ-FromAWS                     queues.json
+▶ ls -l output/json/localhost/*/*.json
+-rw-r--r--  1 nram  staff  29855 Nov 10 10:05 output/json/localhost/ProdVPN/ProdVPN-all.json
+-rw-r--r--  1 nram  staff   9905 Nov 10 10:05 output/json/localhost/ProdVPN/vpn.json
+-rw-r--r--  1 nram  staff  30490 Nov 10 10:05 output/json/localhost/TestVPN/TestVPN-all.json
+-rw-r--r--  1 nram  staff   9908 Nov 10 10:05 output/json/localhost/TestVPN/vpn.json
 ```
