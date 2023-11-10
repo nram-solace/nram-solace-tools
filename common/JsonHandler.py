@@ -2,8 +2,7 @@
 # JsonHandler
 #   Common class for JSON Handling functions
 #
-# Ramesh Natarajan (nram), Solace PSG
-# Sep 13, 2023
+# Ramesh Natarajan (nram@nram.dev)
 ##############################################################################
 
 import sys, os
@@ -43,7 +42,7 @@ class JsonHandler():
                 print ('outfile: {} path: {} fname: {}'. format(outfile, path, fname))
                 print ("makedir: {}".format(path))
             os.makedirs(path)
-        print ("   > Writing to {}".format(outfile))
+        print ("   + Writing to {}".format(outfile))
         with open(outfile, 'w') as fp:
             json.dump(json_data, fp, indent=4, sort_keys=True)
 
@@ -110,6 +109,6 @@ class JsonHandler():
         if os.path.exists(outfile):
             print ("   Overwriting {}".format( outfile))
         else:
-            print ("   Writing to {}".format(outfile))
+            print ("   + Writing to {}".format(outfile))
         with open(outfile, 'w') as fp:
             json.dump(json_data, fp, indent=4, sort_keys=True)

@@ -36,7 +36,7 @@ import pprint
 from urllib.parse import unquote, quote
 
 sys.path.insert(0, os.path.abspath("."))
-from common import SimpleSempHandler
+from common import SempHandler
 from common import JsonHandler
 from common import QueueConfig 
 
@@ -106,7 +106,7 @@ def main(argv):
     input_df = read_input_csv_file(r.input_file)
 
     # create semp handler -- see common/SimpleSempHandler.py
-    semp_h = SimpleSempHandler.SimpleSempHandler(cfg, Verbose)
+    semp_h = SempHandler.SimpleSempHandler(cfg, Verbose)
 
     queues = QueueConfig.Queues(semp_h, cfg, input_df, Verbose)
 

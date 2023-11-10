@@ -17,7 +17,7 @@ import json
 from urllib.parse import unquote, quote # for Python 3.7
 
 sys.path.insert(0, os.path.abspath("."))
-from common import SimpleSempHandler
+from common import SempHandler
 from common import JsonHandler
 
     
@@ -84,7 +84,7 @@ def copy_or_move_msgs (vpn, src_q, dest_q):
         print ('--- ROUTER :\n', json.dumps(rtr_cfg))
         print ('--- SYSCFG :\n', json.dumps(sys_cfg))
 
-    semp_h = SimpleSempHandler.SimpleSempHandler(Cfg, Verbose)
+    semp_h = SempHandler.SimpleSempHandler(Cfg, Verbose)
 
     # Get list of replicationGroupMsgId's from source queue
     page_sz = sys_cfg["semp"]["pageSize"]

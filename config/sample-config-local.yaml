@@ -1,13 +1,16 @@
 ---
 # Router URL and credentials
 router:
+   label: "localhost" # used for dir name and logging purposes
    sempUrl: "http://localhost:8080"
    sempUser: "admin"
    sempPassword: "admin"
 
 # VPN to work with
 vpn:
-   msgVpnName: "TestVPN"
+   msgVpnNames: 
+   - "TestVPN"
+   - "TestVPN2"
 
 # Template values for creating artifacts
 templates:
@@ -43,9 +46,5 @@ templates:
       respectTtlEnabled: false
       subscriptionTopic: ""
 
-# SEMP internal stuff. Don't change unless you know what you're doing
-semp:         
-   pageSize: 100
-   configUrl: "SEMP/v2/config"
-   monitorUrl: "SEMP/v2/monitor"
-   actionUrl: "SEMP/v2/action"
+internal:
+   systemConfig: "config/system.yaml"

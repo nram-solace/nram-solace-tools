@@ -2,8 +2,7 @@
 # QueueConfig
 # Implement Queue provisioning functions
 #
-# Ramesh Natarajan 
-# Solace PSG
+# Ramesh Natarajan (nram@nram.dev)
 #####################################################################
 
 import sys, os

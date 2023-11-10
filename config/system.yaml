@@ -1,0 +1,64 @@
+---
+# System configs
+# DONOT CHANGE VALUES BELOW
+system:
+  outputDir: output/json
+
+# SEMP related configs
+semp:
+  pageSize: 100
+  configUrl: SEMP/v2/config
+  monitorUrl: SEMP/v2/monitor
+  actionUrl: SEMP/v2/action
+  vpnConfigUrl: SEMP/v2/config/msgVpns
+  noPaging:
+    - tlsTrustedCommonNames
+    - remoteMsgVpns
+  leafNode:
+    - subscriptions
+    - jndiConnectionFactories
+    - "#client-username"
+
+# Custom status codes
+status:
+  statusOk:
+    - ALREADY_EXISTS
+    - NOT_ALLOWED
+    - USER_SKIPPED
+  statusUnknown: "000"
+  statusSkip: "123"
+  "000":
+    status: UNKNOWN_STATUS
+    description: Unknown status
+  "123":
+    status: USER_SKIPPED
+    description: Skipped by user in config
+    status_code: 100
+
+# Internal configs to skip dup and unsupported objects
+skipObjects:
+  - msgVpns
+  - publishTopicExceptions
+  - replayLogs
+  - attriutes
+
+# VPN objects such as "default" and system objects to skip processing
+skipTags:
+  aclProfileName:
+    - "#acl-profile"
+    - default
+  clientProfileName:
+    - "#client-profile"
+    - default
+  #clientUsername:
+  #  - "#client-username"
+  #  - default
+  #clientUsernames:
+  #  - "#client-username"
+  #  - default
+  queueName:
+    - "#REPLAY_LOG_defaultLog"
+    - "#REPLAY_TOPICS_defaultLog"
+
+  publishTopicExceptionSyntax:
+    - smf
