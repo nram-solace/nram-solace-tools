@@ -12,6 +12,12 @@ vpn:
    - "TestVPN"
    - "TestVPN2"
 
+# requried for move-queue-msgs
+queues:
+   source: TestQ2
+   destination: TestQ
+
+
 # Template values for creating artifacts
 templates:
    # Queue template to use for creating queues.

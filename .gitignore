@@ -1,0 +1,5 @@
+common/__pycache__/**
+output/**
+common/input/**
+config/old/**
+scripts/untested/**
