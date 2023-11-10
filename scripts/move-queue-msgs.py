@@ -19,10 +19,13 @@ from urllib.parse import unquote, quote # for Python 3.7
 sys.path.insert(0, os.path.abspath("."))
 from common import SempHandler
 from common import JsonHandler
+from common import YamlHandler
 
     
 me = "move-queue-msgs"
-ver = '1.0'
+ver = '2.0.0'
+yaml_h = YamlHandler.YamlHandler()
+
 
 # Globals
 Cfg = {}    # global handy config dict
@@ -51,14 +54,14 @@ def main(argv):
 
     json_h = JsonHandler.JsonHandler()
 
-    Cfg = json_h.read_json_file(r.config_file)
+    Cfg = yaml_h.read_config_file(r.config_file)
     if Verbose > 2:
         print ('USER CONFIG', json.dumps(Cfg, indent=4))
 
     sys_cfg_file = Cfg["internal"]["systemConfig"]
     print ("Reading system config {}".format(sys_cfg_file))
 
-    system_config_all = json_h.read_json_file (sys_cfg_file)
+    system_config_all =  yaml_h.read_config_file (sys_cfg_file)
     if Verbose > 2:
         print ('SYSTEM CONFIG'); pp.pprint (system_config_all)
     sys_cfg = system_config_all # system_config_all["system"]
@@ -84,7 +87,7 @@ def copy_or_move_msgs (vpn, src_q, dest_q):
         print ('--- ROUTER :\n', json.dumps(rtr_cfg))
         print ('--- SYSCFG :\n', json.dumps(sys_cfg))
 
-    semp_h = SempHandler.SimpleSempHandler(Cfg, Verbose)
+    semp_h = SempHandler.SempHandler(Cfg, Verbose)
 
     # Get list of replicationGroupMsgId's from source queue
     page_sz = sys_cfg["semp"]["pageSize"]
