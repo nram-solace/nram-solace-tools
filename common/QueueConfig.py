@@ -2,7 +2,8 @@
 # QueueConfig
 # Implement Queue provisioning functions
 #
-# Ramesh Natarajan (nram@nram.dev)
+# Ramesh Natarajan 
+# Solace PSG
 #####################################################################
 
 import sys, os
@@ -48,12 +49,13 @@ class Queues():
 
         semp_h = self.semp_h
         cfg = self.cfg
+        sys_cfg = cfg['SysCfg']
         input_df = self.input_df
-        print ('Creating Queues in VPN: {} on router: {}'.format(cfg['vpn']['msgVpnName'], cfg['router']['sempUrl']))
+        print ('Creating Queues in VPN: {} on router: {}'.format(cfg['vpn']['msgVpnNames'][0], cfg['router']['sempUrl']))
 
         # Loop through each row and generate obj for SEMP Req
-        msg_vpn_name = cfg['vpn']['msgVpnName']
-        semp_config_url = '{}/{}/msgVpns'.format(cfg['router']['sempUrl'], cfg['semp']['configUrl'])
+        msg_vpn_name = cfg['vpn']['msgVpnNames'][0]
+        semp_config_url = '{}/{}/msgVpns'.format(cfg['router']['sempUrl'], sys_cfg['semp']['configUrl'])
         semp_queue_config_url = f"{semp_config_url}/{msg_vpn_name}/queues"
         num_queues = len(input_df.index)
         n = 0
@@ -138,19 +140,20 @@ class Queues():
     # Get list of deadMsgQueue from input file and create them 
     # All of them are created with same properties (cfg['templates']['dmqueue'])
     # No subscriptions are supported for DMQ. 
-    # If you really want a DMQ with override properties / subscriptionns, 
+    # If you really want a DMQ with override properties / subscriptions, 
     # then provision it as a regular queue
     #--------------------------------------------------------------------
     def create_or_update_dmqueue (self, patch_it):
 
         semp_h = self.semp_h
         cfg = self.cfg
+        sys_cfg = cfg['SysCfg']
         input_df = self.input_df
-        print ('Creating DMQueues in VPN: {} on router: {}'.format(cfg['vpn']['msgVpnName'], cfg['router']['sempUrl']))
+        print ('Creating DMQueues in VPN: {} on router: {}'.format(cfg['vpn']['msgVpnNames'][0], cfg['router']['sempUrl']))
 
         # Loop through each row and generate obj for SEMP Req
-        msg_vpn_name = cfg['vpn']['msgVpnName']
-        semp_config_url = '{}/{}/msgVpns'.format(cfg['router']['sempUrl'], cfg['semp']['configUrl'])
+        msg_vpn_name = cfg['vpn']['msgVpnNames'][0]
+        semp_config_url = '{}/{}/msgVpns'.format(cfg['router']['sempUrl'], sys_cfg['semp']['configUrl'])
         semp_queue_config_url = f"{semp_config_url}/{msg_vpn_name}/queues"
         num_queues = len(input_df.index)
         n = 0
@@ -172,7 +175,7 @@ class Queues():
             data={}
             data=cfg['templates']['dmqueue'].copy()
             #data['messageVpn'] = msg_vpn_name
-            queue = qdata['deadMsgQueue'].strip()
+            queue = qdata['queueName'].strip()
 
             # enable queues
             data['egressEnabled'] = True
