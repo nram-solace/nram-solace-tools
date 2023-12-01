@@ -60,12 +60,14 @@ class SempHandler:
                 headers=hdrs,
                 auth=auth,
                 params=params,
-                data=None)
+                data=None,
+                verify=False)
         else:
             resp = getattr(requests, verb)(url, 
                 headers=hdrs,
                 auth=auth,
-                data=None)
+                data=None,
+                verify=False)
         if Verbose > 2:
             print ('http_get returned: {}'.format(resp))
 
@@ -85,7 +87,8 @@ class SempHandler:
         resp = getattr(requests, verb)(url, 
             headers={"content-type": "application/json"},
             auth=(semp_user, semp_pass),
-            data=(json.dumps(json_data) if json_data != None else None))
+            data=(json.dumps(json_data) if json_data != None else None),
+            verify=False)
         if Verbose > 2:
             print ('http_post resp : {}'.format(resp))
             print ("     resp text :"); pp.pprint (json.loads(resp.text))
@@ -118,7 +121,8 @@ class SempHandler:
         resp = getattr(requests, verb)(url, 
             headers={"content-type": "application/json"},
             auth=(semp_user, semp_pass),
-            data=(json.dumps(json_data) if json_data != None else None))
+            data=(json.dumps(json_data) if json_data != None else None),
+            verify=False)
         if Verbose > 2:
             print ('http_patch resp : {}'.format(resp))
             print ("     resp text :"); pp.pprint (json.loads(resp.text))
@@ -148,7 +152,8 @@ class SempHandler:
         resp = getattr(requests, verb)(url, 
             headers={"content-type": "application/json"},
             auth=(semp_user, semp_pass),
-            data=(json.dumps(json_data) if json_data != None else None))
+            data=(json.dumps(json_data) if json_data != None else None),
+            verify=False)
         if Verbose > 2:
             print ('http_put returning : {}'.format(resp))
         return resp
