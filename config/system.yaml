@@ -3,6 +3,7 @@
 # DONOT CHANGE VALUES BELOW
 system:
   outputDir: output/json
+  logDir: logs
 
 # SEMP related configs
 semp:

@@ -85,7 +85,7 @@ class ConfigParser:
             # obj_type: clientConnectExceptions
             # obj: #acl-profile (can also be "test-vpn" in top level see HACK below)
 
-            sys_cfg = Cfg["SysCfg"]
+            sys_cfg = Cfg["system"]
             # TODO: This endsup looking for far too many json files that will never be found
             # some of them leading to invalid path. 
             # fix to prevent that -- need more tighter control.

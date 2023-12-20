@@ -36,6 +36,7 @@ import pprint
 from urllib.parse import unquote, quote
 
 sys.path.insert(0, os.path.abspath("."))
+from common import LogHandler
 from common import SempHandler
 #from common import JsonHandler
 from common import QueueConfig 
@@ -45,7 +46,7 @@ from common import YamlHandler
 pp = pprint.PrettyPrinter(indent=4)
 
 me = "create-queues"
-ver = '1.2'
+ver = '1.3.0'
 
 # Globals
 Cfg = {}    # global handy config dict
@@ -97,14 +98,32 @@ def main(argv):
     system_config_all = yaml_h.read_config_file (sys_cfg_file)
     if Verbose > 2:
         print ('SYSTEM CONFIG'); pp.pprint (system_config_all)
-    Cfg['SysCfg'] = system_config_all.copy() # store system cfg in the global Cfg dict
+    Cfg['system'] = system_config_all.copy() # store system cfg in the global Cfg dict
+    Cfg['script_name'] = me
+    Cfg['verbose'] = Verbose
+
+    log_h = LogHandler.LogHandler(Cfg)
+
+    log = log_h.get()
+
+    log.info('Starting {}-{}'.format(me, ver))
 
     input_df = read_input_csv_file(r.input_file)
+
+    log.info ('SYSTEM CONFIG {}'.format(json.dumps(system_config_all, indent=4)))
+    log.info ('USER CONFIG {}'.format(json.dumps(Cfg, indent=4)))
+    log.info ('INPUT DATA : {}'.format(json.dumps(input_df.to_dict(), indent=4)))
+    # add this after dumping .. josn.dumps() can't handle log object
+    Cfg['log_handler'] = log_h
+
 
     # split input_df into regular queues and DLQs
     # Add your logic here
     regularqs = input_df[-input_df['queueName'].str.contains('(_DLQ)')]
     dmqs = input_df[input_df['queueName'].str.contains('(_DLQ)')]
+
+    log.info ('REGULAR QUEUES : {}'.format(json.dumps(regularqs.to_dict(), indent=4)))
+    log.info ('DMQS : {}'.format(json.dumps(dmqs.to_dict(), indent=4)))
 
     if Verbose > 2:
         print ('INPUT')

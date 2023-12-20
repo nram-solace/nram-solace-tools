@@ -14,12 +14,15 @@ import pprint
 # Globals
 pp = pprint.PrettyPrinter(indent=4)
 Verbose = 0
+log = None
 
 class Queues():
 
     def __init__(self, semp_h, cfg, input_df, verbose = 0):
         global Verbose
+        global log
         Verbose = verbose
+        log = cfg['log_handler'].get()
         self.semp_h = semp_h
         self.cfg = cfg
         self.input_df = input_df
@@ -49,9 +52,13 @@ class Queues():
 
         semp_h = self.semp_h
         cfg = self.cfg
-        sys_cfg = cfg['SysCfg']
+        sys_cfg = cfg['system']
         input_df = self.input_df
-        print ('Creating Queues in VPN: {} on router: {}'.format(cfg['vpn']['msgVpnNames'][0], cfg['router']['sempUrl']))
+
+        if patch_it:
+            log.info ('Patching Queues in VPN: {} on router: {}'.format(cfg['vpn']['msgVpnNames'][0], cfg['router']['sempUrl']))
+        else:
+            log.info ('Creating Queues in VPN: {} on router: {}'.format(cfg['vpn']['msgVpnNames'][0], cfg['router']['sempUrl']))
 
         # Loop through each row and generate obj for SEMP Req
         msg_vpn_name = cfg['vpn']['msgVpnNames'][0]
@@ -78,6 +85,7 @@ class Queues():
             data=cfg['templates']['queue'].copy()
             #data['messageVpn'] = msg_vpn_name
             queue = qdata['queueName'].strip()
+            log.info ('Processing queue: {} (Patch: {})'.format(queue, patch_it))
             for prop in queue_props:
                 if prop in qdata:
                     if isinstance(qdata[prop], str) and qdata[prop].strip() != "":
@@ -101,7 +109,7 @@ class Queues():
                 #---------------------------------------------------
                 # If Queue exists, patch it
                 #
-                print (f'   + Queue {queue} exists. Disable and patch it')
+                log.info (f'Queue {queue} exists. Disable and patch it')
                 # disable queue first
                 data0 = {}
                 data0['queueName'] = queue
@@ -114,12 +122,13 @@ class Queues():
 
             if patch_it:
                 # remove subscriptions first
-                print ('   = Reapply subscriptions (PATCH)')
+                log.info (f'Reapplying subscriptions on Queue {queue} (PATCH)')
                 semp_queue_sub_config_url = f"{semp_config_url}/{msg_vpn_name}/queues/{queue}/subscriptions"
                 resp = semp_h.http_get(semp_queue_sub_config_url)
                 for topic in self.get_topic_list (resp):
-                    print (f'   - Deleting subscription topic: [{topic}]')
+                    log.info (f'Deleting subscription topic: [{topic}]')
                     semp_queue_sub_delete_url = f"{semp_config_url}/{msg_vpn_name}/queues/{queue}/subscriptions/{quote(topic, safe='')}"
+                    log.info(f'SEMP post url: {semp_queue_sub_delete_url}')
                     semp_h.http_delete (semp_queue_sub_delete_url)
             # now add subscription topics
             for topics in sub_topic_saved.split(':'):
@@ -129,7 +138,7 @@ class Queues():
                     data['msgVpnName'] = msg_vpn_name
                     data['queueName'] = queue
                     data['subscriptionTopic'] = topic
-                    print (f'   + Adding subscription topic: [{topic}]')
+                    log.info (f'Adding subscription topic: [{topic}] on queue {queue}')
                     semp_queue_sub_config_url = f"{semp_config_url}/{msg_vpn_name}/queues/{queue}/subscriptions"
                     semp_h.http_post (semp_queue_sub_config_url, data)
 
@@ -147,9 +156,12 @@ class Queues():
 
         semp_h = self.semp_h
         cfg = self.cfg
-        sys_cfg = cfg['SysCfg']
+        sys_cfg = cfg['system']
         input_df = self.input_df
-        print ('Creating DMQueues in VPN: {} on router: {}'.format(cfg['vpn']['msgVpnNames'][0], cfg['router']['sempUrl']))
+        if patch_it:
+            log.info ('Patching DMQueues in VPN: {} on router: {}'.format(cfg['vpn']['msgVpnNames'][0], cfg['router']['sempUrl'])) 
+        else:
+            log.info ('Creating DMQueues in VPN: {} on router: {}'.format(cfg['vpn']['msgVpnNames'][0], cfg['router']['sempUrl']))
 
         # Loop through each row and generate obj for SEMP Req
         msg_vpn_name = cfg['vpn']['msgVpnNames'][0]
@@ -166,7 +178,7 @@ class Queues():
         queue_props.append('deadMsgQueue')
         #queue_props.append('msgVpnName')
         if Verbose > 2:
-            print ('Tags:', queue_props)    
+            print ('Tags:', queue_props)
         
         for index, qdata in input_df.iterrows():
             n = n + 1
@@ -176,6 +188,7 @@ class Queues():
             data=cfg['templates']['dmqueue'].copy()
             #data['messageVpn'] = msg_vpn_name
             queue = qdata['queueName'].strip()
+            log.info ('Processing DMQ queue: {} (Patch: {})'.format(queue, patch_it))
 
             # enable queues
             data['egressEnabled'] = True
@@ -193,7 +206,7 @@ class Queues():
                 #---------------------------------------------------
                 # If Queue exists, patch it
                 #
-                print (f'   + Queue {queue} exists. Disable and patch it')
+                log.info (f'Queue {queue} exists. Disable and patch it')
 
                 # Patch with new values and enable
                 semp_h.http_patch (f"{semp_queue_config_url}/{queue}", data)

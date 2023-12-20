@@ -30,14 +30,16 @@ pp = pprint.PrettyPrinter(indent=4)
 Verbose = 0
 Cfg = {}
 json_h = JsonHandler.JsonHandler()
+log = None
 
 
 class SempHandler:
     """ Solace SEMPv2 Parser implementation """
     
     def __init__(self, cfg, vpn="default", outdir = "output/default", verbose = 0):
-        global Verbose, Cfg
+        global Verbose, Cfg, log
         Verbose = verbose
+        log = cfg['log_handler'].get()
         Cfg = cfg
         self.vpn = vpn
         self.out_dir = outdir
@@ -50,6 +52,9 @@ class SempHandler:
         if Verbose > 2:
             print ("Entering {}:{} url: {} params: {}".format( __class__.__name__, inspect.stack()[0][3], url, params))
 
+        log.info('SEMP GET url: {}'.format(url))
+        if Verbose > 2:
+            print ('SEMP GET url: {}'.format(url))
         verb = 'get'
         semp_user = Cfg["router"]["sempUser"]
         semp_pass = Cfg["router"]["sempPassword"]
@@ -68,8 +73,11 @@ class SempHandler:
                 auth=auth,
                 data=None,
                 verify=False)
+        log.info ('SEMP GET returned: {}'.format(resp))
+
+        #log.info ('SEMP GET returned: {}'.format(json.dump(resp, indent=4, sort_keys=True)))
         if Verbose > 2:
-            print ('http_get returned: {}'.format(resp))
+            print ('http_get returned: {}'.format(json.dump(resp, indent=4, sort_keys=True)))
 
         return resp
 
@@ -79,8 +87,8 @@ class SempHandler:
     def http_post(self, url, json_data):
         if Verbose > 2:
             print ("Entering {}:{} url = {}".format( __class__.__name__, inspect.stack()[0][3], url))
-        if Verbose > 2:
-            print ('posting json-data:\n', json.dumps(json_data, indent=4, sort_keys=True))
+        log.info('SEMP POST url: {}'.format(url))
+        log.info ('SEMP posting json-data: {}'.format (json.dumps(json_data, indent=4, sort_keys=True)))
         verb = 'post'
         semp_user = Cfg["router"]["sempUser"]
         semp_pass = Cfg["router"]["sempPassword"]
@@ -93,6 +101,8 @@ class SempHandler:
             print ('http_post resp : {}'.format(resp))
             print ("     resp text :"); pp.pprint (json.loads(resp.text))
         json_resp = json.loads(resp.text)
+
+        log.info ('SEMP POST returned: {}'.format(json.dumps(json_resp, indent=4, sort_keys=True)))
 
         if json_resp['meta']['responseCode'] == 200:
             if Verbose:
@@ -113,8 +123,11 @@ class SempHandler:
     def http_patch (self, url, json_data):
         if Verbose > 2:
             print ("Entering {}:{} url = {}".format( __class__.__name__, inspect.stack()[0][3], url))
+        log.info('SEMP PATCH url: {}'.format(url))
+        log.info ('SEMP patching json-data: {}'.format(json.dumps(json_data, indent=4, sort_keys=True)))
         if Verbose > 2:
             print ('patching json-data:\n', json.dumps(json_data, indent=4, sort_keys=True))
+
         verb = 'patch'
         semp_user = Cfg["router"]["sempUser"]
         semp_pass = Cfg["router"]["sempPassword"]
@@ -127,6 +140,10 @@ class SempHandler:
             print ('http_patch resp : {}'.format(resp))
             print ("     resp text :"); pp.pprint (json.loads(resp.text))
         json_resp = json.loads(resp.text)
+
+        log.info ('SEMP PATCH returned: {}'.format(json_resp))
+
+        #log.info ('SEMP PATCH returned: {}'.format(json.dump(json_resp, indent=4, sort_keys=True)))
 
         if json_resp['meta']['responseCode'] == 200:
             if Verbose:
@@ -144,6 +161,8 @@ class SempHandler:
     def http_put(self, url, json_data):
         if Verbose > 2:
             print ("Entering {}:{} url = {}".format( __class__.__name__, inspect.stack()[0][3], url))
+        log.info('SEMP PUT url: {}'.format(url))
+        log.info('SEMP putting json-data: {}'.format(json.dumps(json_data, indent=4, sort_keys=True)))
         if Verbose > 2:
             print ('posting json-data:\n', json.dumps(json_data, indent=4, sort_keys=True))
         verb = 'put'
@@ -154,6 +173,8 @@ class SempHandler:
             auth=(semp_user, semp_pass),
             data=(json.dumps(json_data) if json_data != None else None),
             verify=False)
+        
+        log.info ('SEMP PUT returned: {}'.format(json.dump(resp.json(), indent=4, sort_keys=True)))
         if Verbose > 2:
             print ('http_put returning : {}'.format(resp))
         return resp
@@ -170,6 +191,8 @@ class SempHandler:
         semp_user = Cfg["router"]["sempUser"]
         semp_pass = Cfg["router"]["sempPassword"]
         
+        log.info('SEMP DELETE url: {}'.format(url))
+
         if Verbose:
             print("   DELETE URL {} ({})".format(unquote(url), semp_user))
    
@@ -178,8 +201,10 @@ class SempHandler:
             auth=(semp_user, semp_pass),
             data=(None),
             verify=False)
+        
+        log.info ('SEMP DELETE returned: {}'.format(resp))
         if Verbose:
-            print ('http_delete returning : {}'.format(resp))
+            print ('http_delete returning : {}'.format(json.dump(resp.json(), indent=4, sort_keys=True)))
         if Verbose > 2:
             print('Response:\n%s',resp.json())
         if (resp.status_code != 200):
@@ -205,7 +230,7 @@ class SempHandler:
             print ('Entering {}::{} url = {}'.format(__class__.__name__, inspect.stack()[0][3], url))
         verb='get'
 
-        sys_cfg = Cfg['SysCfg']
+        sys_cfg = Cfg['system']
         page_size = sys_cfg["semp"]["pageSize"]
         no_paging = sys_cfg["semp"]["noPaging"]
 
