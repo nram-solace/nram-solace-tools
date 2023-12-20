@@ -64,9 +64,8 @@ def main(argv):
     system_config_all =  yaml_h.read_config_file (sys_cfg_file)
     if Verbose > 2:
         print ('SYSTEM CONFIG'); pp.pprint (system_config_all)
-    sys_cfg = system_config_all # system_config_all["system"]
 
-    Cfg['SysCfg'] = sys_cfg.copy() # store system cfg in the global Cfg dict
+    Cfg['system'] = system_config_all.copy() # store system cfg in the global Cfg dict
 
     vpn = Cfg["vpn"]["msgVpnNames"][0]
     src_q = Cfg["queues"]["source"]
@@ -82,7 +81,7 @@ def copy_or_move_msgs (vpn, src_q, dest_q):
         print ("copy_or_move_msgs: vpn: {} src_q: {} dest_q: {}".format(vpn, src_q, dest_q))
 
     rtr_cfg = Cfg["router"]
-    sys_cfg = Cfg["SysCfg"]
+    sys_cfg = Cfg["system"]
     if Verbose > 2:
         print ('--- ROUTER :\n', json.dumps(rtr_cfg))
         print ('--- SYSCFG :\n', json.dumps(sys_cfg))

@@ -67,9 +67,8 @@ def main(argv):
     system_config_all = yaml_h.read_config_file (sys_cfg_file)
     if Verbose > 2:
         print ('SYSTEM CONFIG'); pp.pprint (system_config_all)
-    sys_cfg = system_config_all # system_config_all["system"]
 
-    Cfg['SysCfg'] = sys_cfg.copy() # store system cfg in the global Cfg dict
+    Cfg['system'] = system_config_all.copy() # store system cfg in the global Cfg dict
 
     cfg_p = ConfigParser.ConfigParser(Cfg)
 
@@ -102,7 +101,7 @@ def get_vpn_data(vpn):
          print ('Entering {}::{} vpn = {}'.format(__name__, inspect.stack()[0][3], vpn))
 
     rtr_cfg = Cfg["router"]
-    sys_cfg = Cfg["SysCfg"]
+    sys_cfg = Cfg["system"]
     if Verbose > 2:
         print ('--- ROUTER :\n', json.dumps(rtr_cfg))
         print ('--- SYSCFG :\n', json.dumps(sys_cfg))

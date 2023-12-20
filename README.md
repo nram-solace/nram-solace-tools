@@ -1,13 +1,12 @@
 # Solace Management Tools with SEMP
 ---
 
-This repository has python Scripts for provisioning and managing [Solace PubSub+ event broker](https://solace.com/products/event-broker/)  using [SEMPv2](https://docs.solace.com/Admin/SEMP/Using-SEMP.htm) protocol.
+This repository has Python Scripts for provisioning and managing [Solace PubSub+ event broker](https://solace.com/products/event-broker/)  using [SEMPv2](https://docs.solace.com/Admin/SEMP/Using-SEMP.htm) protocol.
 
 # Pre Requsites
 The scripts in this repository require the followig:
-- Python 3.6 or better
+- Python 3.10 or better
 - The following Python Modules:
-  - datetime
   - json
   - glob
   - pandas
@@ -55,4 +54,5 @@ All scripts take in this repository take a config file that has the broeke acces
 	This script can copy or move messages from one Queue to anothe Queue.
 
 ---
-ramesh.natarajan@solace.com
+Ramesh Natarajan (nram@nram.dev)
+Solace PSG
