@@ -103,27 +103,24 @@ def main(argv):
     Cfg['verbose'] = Verbose
 
     log_h = LogHandler.LogHandler(Cfg)
-
     log = log_h.get()
-
     log.info('Starting {}-{}'.format(me, ver))
 
     input_df = read_input_csv_file(r.input_file)
 
-    log.info ('SYSTEM CONFIG {}'.format(json.dumps(system_config_all, indent=4)))
-    log.info ('USER CONFIG {}'.format(json.dumps(Cfg, indent=4)))
-    log.info ('INPUT DATA : {}'.format(json.dumps(input_df.to_dict(), indent=4)))
-    # add this after dumping .. josn.dumps() can't handle log object
+    log.info ('SYSTEM CONFIG : {}'.format(json.dumps(system_config_all, indent=4)))
+    log.info ('USER CONFIG   : {}'.format(json.dumps(Cfg, indent=4)))
+    log.info ('INPUT DATA    : {}'.format(json.dumps(input_df.to_dict(), indent=4)))
+    # add this after dumping Cfg. josn.dumps() can't handle log object
     Cfg['log_handler'] = log_h
-
 
     # split input_df into regular queues and DLQs
     # Add your logic here
     regularqs = input_df[-input_df['queueName'].str.contains('(_DLQ)')]
     dmqs = input_df[input_df['queueName'].str.contains('(_DLQ)')]
 
-    log.info ('REGULAR QUEUES : {}'.format(json.dumps(regularqs.to_dict(), indent=4)))
-    log.info ('DMQS : {}'.format(json.dumps(dmqs.to_dict(), indent=4)))
+    log.info ('REGULAR QUEUES : {}'.format(json.dumps(regularqs['queueName'].to_dict(), indent=4)))
+    log.info ('DMQS : {}'.format(json.dumps(dmqs['queueName'].to_dict(), indent=4)))
 
     if Verbose > 2:
         print ('INPUT')

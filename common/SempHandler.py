@@ -141,9 +141,9 @@ class SempHandler:
             print ("     resp text :"); pp.pprint (json.loads(resp.text))
         json_resp = json.loads(resp.text)
 
-        log.info ('SEMP PATCH returned: {}'.format(json_resp))
+        #log.info ('SEMP PATCH returned: {}'.format(json_resp))
 
-        #log.info ('SEMP PATCH returned: {}'.format(json.dump(json_resp, indent=4, sort_keys=True)))
+        log.info ('SEMP PATCH returned: {}'.format(json.dumps(json_resp, indent=4, sort_keys=True)))
 
         if json_resp['meta']['responseCode'] == 200:
             if Verbose:
