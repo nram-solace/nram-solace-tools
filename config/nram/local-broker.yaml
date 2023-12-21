@@ -1,0 +1,57 @@
+
+---
+# Router URL and credentials
+router:
+   label: "localhost" # used for dir name and logging purposes
+   sempUrl: "http://localhost:8080"
+   sempUser: "admin"
+   sempPassword: "admin"
+
+# VPN to work with
+vpn:
+   msgVpnNames: 
+   - TestVPN
+   - ProdVPN
+
+# requried for move-queue-msgs
+queues:
+   source: TestQ2
+   destination: TestQ
+
+
+# Template values for creating artifacts
+templates:
+   # Queue template to use for creating queues.
+   # These values can be overwritten in the input CSV file
+   # Any property not listed here / input CSV will use Solace defaults
+   queue:
+      accessType: "non-exclusive"
+      deadMsgQueue: "#DEAD_MSG_QUEUE"
+      maxBindCount: 10
+      maxDeliveredUnackedMsgsPerFlow: 1000
+      maxMsgSize: 1000000
+      maxMsgSpoolUsage: 1234
+      maxRedeliveryCount: 2
+      maxTtl: 0
+      owner: "solace-cloud-client"
+      permission: "no-access"
+      redeliveryEnabled: true
+      respectTtlEnabled: true
+      subscriptionTopic: ""
+   dmqueue:
+      accessType: "exclusive"
+      deadMsgQueue: "#DEAD_MSG_QUEUE"
+      maxBindCount: 1
+      maxDeliveredUnackedMsgsPerFlow: 1000
+      maxMsgSize: 1000000
+      maxMsgSpoolUsage: 5000
+      maxRedeliveryCount: 0
+      maxTtl: 0
+      owner: "solace-cloud-client"
+      permission: "no-access"
+      redeliveryEnabled: false
+      respectTtlEnabled: false
+      subscriptionTopic: ""
+
+internal:
+   systemConfig: "config/system.yaml"
