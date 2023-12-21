@@ -2,3 +2,10 @@
 output/**
 config/old/**
 */wip/**
+*/private/**
+private/**
+*/__pycache__/*
+logs/**
+common/__pycache__/*
+docs/notes.txt
+common/__pycache__/JsonHandler.cpython-311.pyc
